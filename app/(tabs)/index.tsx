@@ -52,7 +52,6 @@ export default function HomeScreen() {
             value={searchPaket}
             onChangeText={(text) => setSearchPaket(text)}
             placeholder="cari paket"
-            onSubmitEditing={() => handleSearch()}
             style={{
               width: "90%",
               position: "absolute",
@@ -64,7 +63,10 @@ export default function HomeScreen() {
           />
         </View>
 
-        <ListPaketComponent />
+        <ListPaketComponent
+          searchParam={searchPaket}
+          clearSearch={() => setSearchPaket("")}
+        />
       </SafeAreaView>
     </GestureHandlerRootView>
   );
