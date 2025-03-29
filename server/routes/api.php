@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/order', [OrderController::class, 'index']);
-Route::post('/order', [OrderController::class, 'create']);
-Route::put('/order', [OrderController::class, 'updateStatus']);
+Route::get('/order/{id}', [OrderController::class, 'show']);
+Route::post('/order', [OrderController::class, 'store']);
+Route::put('/order/{id}', [OrderController::class, 'updateStatus']);
 Route::get('/laundry-packets', [LaundryPacketController::class, 'index']);
+Route::get('/laundry-packets/{id}', [LaundryPacketController::class, 'show']);

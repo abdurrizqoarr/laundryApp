@@ -19,6 +19,10 @@ const ListPaketComponent = ({
     useState<DataPaketLaundry[]>(paketLaundry);
 
   useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     if (searchParam.trim() === "") {
       setFilteredData(paketLaundry); // Jika input kosong, tampilkan semua data
     } else {

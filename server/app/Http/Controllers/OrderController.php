@@ -19,8 +19,43 @@ class OrderController extends Controller
     public function index()
     {
         try {
-            $orders = Order::with(['customer', 'laundryPacket'])->orderBy('create_at')->get();
-            return response()->json(['message' => 'success', 'data' => $orders], 200);
+            $orders = Order::with(['customer', 'laundryPacket'])
+                ->orderBy('created_at', 'desc')
+                ->paginate(20);
+
+            return response()->json([
+                'message' => 'success',
+                'data' => $orders->items(), // Mengambil hanya daftar data, bukan semua metadata pagination
+                'pagination' => [
+                    'current_page' => $orders->currentPage(),
+                    'per_page' => $orders->perPage(),
+                    'total' => $orders->total(),
+                    'last_page' => $orders->lastPage(),
+                ]
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan pada server',
+                'error' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function show($id)
+    {
+        try {
+            $data = Order::with(['customer', 'laundryPacket'])
+                ->findOrFail($id);
+
+            return response()->json([
+                'message' => 'Success',
+                'data' => $data
+            ], 200);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Data not found',
+                'data' => null
+            ], 404);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage(),
@@ -29,6 +64,7 @@ class OrderController extends Controller
         }
     }
 
+
     /**
      * Store a newly created resource in storage.
      */
@@ -36,7 +72,7 @@ class OrderController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'customer_id'   => 'sometimes|exists:customers,id',
-            'packet_id'     => 'required|exists:laundry_packets,id',
+            'packet_id'     => 'required|exists:laudry_packets,id',
             'total_berat'   => 'required|numeric|min:1',
             'nama_customer' => 'sometimes|required_without:customer_id|string|max:120',
             'nomer_hp'      => 'sometimes|required_without:customer_id|string|max:20',

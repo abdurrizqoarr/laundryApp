@@ -35,7 +35,19 @@ export default function RootLayout() {
     <PaperProvider>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="detailpaket/[id]" options={{ headerShown: true }} />
+        <Stack.Screen
+          name="detailpaket/[id]"
+          options={{ headerShown: true, headerShadowVisible: false }}
+        />
+
+        <Stack.Screen
+          name="detailOrder/[id]"
+          options={{
+            headerShown: true,
+            headerShadowVisible: false,
+            headerTitle: "",
+          }}
+        />
       </Stack>
     </PaperProvider>
   );

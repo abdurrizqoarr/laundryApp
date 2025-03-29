@@ -7,11 +7,6 @@ import { Searchbar, Text } from "react-native-paper";
 export default function HomeScreen() {
   const [searchPaket, setSearchPaket] = useState<string>("");
 
-  const handleSearch = () => {
-    console.log("Paket yang dicari:", searchPaket);
-    // Lakukan sesuatu, misalnya panggil API atau filter daftar paket
-  };
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={styles.container}>

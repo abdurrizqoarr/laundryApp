@@ -13,7 +13,9 @@ class LaudryPacket extends Model
 
     protected $table = 'laudry_packets';
     protected $primaryKey = 'id';
-
+    public $incrementing = false;
+    protected $keyType = 'string';
+    
     protected $fillable = [
         'nama_paket',
         'harga',

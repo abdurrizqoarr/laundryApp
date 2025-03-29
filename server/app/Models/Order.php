@@ -13,7 +13,9 @@ class Order extends Model
 
     protected $table = 'orders';
     protected $primaryKey = 'id';
-
+    public $incrementing = false;
+    protected $keyType = 'string';
+    
     protected $fillable = [
         'customer_id',
         'packet_id',

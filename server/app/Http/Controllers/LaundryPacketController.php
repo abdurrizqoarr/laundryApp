@@ -26,4 +26,26 @@ class LaundryPacketController extends Controller
             'data' => $packets
         ], 200);
     }
+
+    public function show($id)
+    {
+        try {
+            $data = LaudryPacket::findOrFail($id);
+
+            return response()->json([
+                'message' => 'Success',
+                'data' => $data
+            ], 200);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Data not found',
+                'data' => null
+            ], 404);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+                'data' => null
+            ], 500);
+        }
+    }
 }
